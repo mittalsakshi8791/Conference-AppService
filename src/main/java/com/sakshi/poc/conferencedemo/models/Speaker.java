@@ -111,4 +111,12 @@ public class Speaker {
     public void setSpeakerBio(String speakerBio) {
         this.speakerBio = speakerBio;
     }
+
+    public byte[] getSpeakerPhoto() {
+        return speakerPhoto;
+    }
+
+    public void setSpeakerPhoto(byte[] speakerPhoto) {
+        this.speakerPhoto = speakerPhoto;
+    }
 }
