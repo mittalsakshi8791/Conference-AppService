@@ -2,8 +2,11 @@ package com.sakshi.poc.conferencedemo.controllers;
 
 import com.sakshi.poc.conferencedemo.models.Session;
 import com.sakshi.poc.conferencedemo.repositories.SessionRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,4 +61,19 @@ public class SessionsController {
         existingSession.setSessionDescription(session.getSessionDescription());
         return sessionRepository.saveAndFlush(existingSession);
     }
+
+//    @ExceptionHandler(EntityNotFoundException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public String handleException()
+//    {
+//        return "oops something went wrong" ;
+//    }
+
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public String handleAllException(HttpServletRequest request,Exception e)
+//    {
+//        String method=request.getMethod();
+//        return "oops something went wrong in method:"+method +"with exception:"+e.getMessage();
+//    }
 }
