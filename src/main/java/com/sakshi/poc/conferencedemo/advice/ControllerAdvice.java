@@ -1,8 +1,4 @@
 package com.sakshi.poc.conferencedemo.advice;
-
-import com.sakshi.poc.conferencedemo.controllers.SessionsController;
-import com.sakshi.poc.conferencedemo.controllers.SpeakersController;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

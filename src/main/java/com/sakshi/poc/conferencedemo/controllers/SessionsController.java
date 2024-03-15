@@ -2,19 +2,25 @@ package com.sakshi.poc.conferencedemo.controllers;
 
 import com.sakshi.poc.conferencedemo.models.Session;
 import com.sakshi.poc.conferencedemo.repositories.SessionRepository;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.BeanUtils;
+import com.sakshi.poc.conferencedemo.services.SessionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/sessions")
 public class SessionsController {
 
+    private final SessionService sessionService;
+    private static final Logger logger= LoggerFactory.getLogger("SessionsController.class");
+    public SessionsController(SessionService sessionService)
+    {
+        this.sessionService=sessionService;
+    }
+
+    //Property Injection. Preferable is constructor Injection
     @Autowired
     private SessionRepository sessionRepository;
 
@@ -26,9 +32,9 @@ public class SessionsController {
 
     @GetMapping
     @RequestMapping("{id}")
-    public Session getSessionById(@PathVariable Long id)
-    {
-        return sessionRepository.getReferenceById(id);
+    public Session getSessionById(@PathVariable Long id) throws Exception {
+        logger.info("Getting speaker for Id:{} ",id);
+        return sessionService.getSessionById(id);
     }
 
     @PostMapping
