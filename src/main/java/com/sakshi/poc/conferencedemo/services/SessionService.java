@@ -4,8 +4,10 @@ import com.sakshi.poc.conferencedemo.models.Session;
 import com.sakshi.poc.conferencedemo.repositories.SessionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class SessionService {
+public class SessionService implements ISessionService {
 
     private final SessionRepository sessionRepository;
 
@@ -15,6 +17,7 @@ public class SessionService {
         this.sessionRepository=sessionRepository;
     }
 
+    @Override
     public Session getSessionById(Long id) throws Exception {
         if(id==null)
             throw new Exception("SessionId cannot be null.");
@@ -24,6 +27,12 @@ public class SessionService {
             throw new Exception("Session does not exist");
         return  session;
 
+    }
+
+    @Override
+    public List<Session> getSessions()
+    {
+        return sessionRepository.findAll();
     }
 
 }

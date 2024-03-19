@@ -2,10 +2,11 @@ package com.sakshi.poc.conferencedemo.controllers;
 
 import com.sakshi.poc.conferencedemo.models.Session;
 import com.sakshi.poc.conferencedemo.repositories.SessionRepository;
-import com.sakshi.poc.conferencedemo.services.SessionService;
+import com.sakshi.poc.conferencedemo.services.ISessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/v1/sessions")
 public class SessionsController {
 
-    private final SessionService sessionService;
+    private final ISessionService sessionService;
     private static final Logger logger= LoggerFactory.getLogger("SessionsController.class");
-    public SessionsController(SessionService sessionService)
+    public SessionsController(ISessionService sessionService)
     {
         this.sessionService=sessionService;
     }
@@ -27,14 +28,19 @@ public class SessionsController {
     @GetMapping
     public List<Session> getSessions()
     {
-        return sessionRepository.findAll();
+        return sessionService.getSessions();
     }
 
     @GetMapping
     @RequestMapping("{id}")
-    public Session getSessionById(@PathVariable Long id) throws Exception {
-        logger.info("Getting speaker for Id:{} ",id);
-        return sessionService.getSessionById(id);
+    public ResponseEntity<Session> getSessionById(@PathVariable Long id) throws Exception {
+        logger.info("Getting session for Id:{} ",id);
+        Session session=sessionService.getSessionById(id);
+        if(session==null)
+            return ResponseEntity.notFound().build();
+        else
+            return  ResponseEntity.ok(session);
+
     }
 
     @PostMapping
